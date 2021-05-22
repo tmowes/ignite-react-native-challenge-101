@@ -1,11 +1,16 @@
 import React from 'react';
 import { FlatList, TouchableOpacity, View, Text, StyleSheet, FlatListProps } from 'react-native';
+import { theme } from '../styles/theme';
 
-function FlatListHeaderComponent() {
+function FlatListHeaderComponent({ colors }: { colors?: typeof theme.light }) {
+  const { text } = colors ?? theme.light
   return (
     <View>
-      <Text style={styles.header}>Minhas tasks</Text>
-    </View>
+      <Text style={[styles.header,
+      { color: text }
+      ]}>Minhas tasks</Text>
+    </View >
+
   )
 }
 
@@ -17,9 +22,11 @@ interface MyTasksListProps {
   }[];
   onPress: (id: number) => void;
   onLongPress: (id: number) => void;
+  colors?: typeof theme.light
 }
 
-export function MyTasksList({ tasks, onLongPress, onPress }: MyTasksListProps) {
+export function MyTasksList({ tasks, onLongPress, onPress, colors }: MyTasksListProps) {
+  const { text, textDone, header } = colors  ?? theme.light
   return (
     <FlatList
       data={tasks}
@@ -37,18 +44,18 @@ export function MyTasksList({ tasks, onLongPress, onPress }: MyTasksListProps) {
             <View
               testID={`marker-${index}`}
               //DONE - use style prop
-              style={item.done ? styles.taskMarkerDone : styles.taskMarker}
+              style={item.done ? [styles.taskMarkerDone, { backgroundColor: header }] : styles.taskMarker}
             />
             <Text
               //DONE - use style prop
-              style={item.done ? styles.taskTextDone : styles.taskText}
+              style={item.done ? [styles.taskTextDone, { color: textDone }] : { color: text }}
             >
               {item.title}
             </Text>
           </TouchableOpacity>
         )
       }}
-      ListHeaderComponent={<FlatListHeaderComponent />}
+      ListHeaderComponent={<FlatListHeaderComponent colors={colors!} />}
       ListHeaderComponentStyle={{
         marginBottom: 20
       }}
@@ -83,9 +90,6 @@ const styles = StyleSheet.create({
     borderColor: '#3D3D4D',
     marginRight: 10
   },
-  taskText: {
-    color: '#3D3D4D',
-  },
   taskButtonDone: {
     flex: 1,
     paddingHorizontal: 10,
@@ -104,7 +108,6 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   taskTextDone: {
-    color: '#A09CB1',
     textDecorationLine: 'line-through'
   }
 })

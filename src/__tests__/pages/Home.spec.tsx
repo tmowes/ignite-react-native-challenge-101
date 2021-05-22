@@ -10,7 +10,7 @@ describe('Home', () => {
 
     fireEvent.changeText(inputElement, 'Primeira tarefa');
     fireEvent(inputElement, 'submitEditing');
-    
+
     fireEvent.changeText(inputElement, 'Segunda tarefa');
     fireEvent(inputElement, 'submitEditing');
 
@@ -37,7 +37,7 @@ describe('Home', () => {
 
     const buttonElement = getByTestId('button-0');
     const markerElement = getByTestId('marker-0');
-    
+
     const taskElement = getByText('Primeira tarefa');
 
     expect(buttonElement).toHaveStyle({
@@ -81,7 +81,7 @@ describe('Home', () => {
 
     fireEvent.changeText(inputElement, 'Primeira tarefa');
     fireEvent(inputElement, 'submitEditing');
-    
+
     fireEvent.changeText(inputElement, 'Segunda tarefa');
     fireEvent(inputElement, 'submitEditing');
 
